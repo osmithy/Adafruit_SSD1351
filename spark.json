@@ -1,0 +1,7 @@
+{
+  "name": "Adafruit_SSD1351",
+  "author": "Limor Fried/Ladyada",
+  "license": "BSD",
+  "version": "1.0.2",
+  "description": "Adafruit's library for their 1.5 inch color OLED screen / breakout board (http://adafru.it/1451)"
+}
