@@ -1,13 +1,6 @@
 #ifndef _ADAFRUIT_GFX_H
 #define _ADAFRUIT_GFX_H
 
-#if ARDUINO >= 100
- #include "Arduino.h"
- #include "Print.h"
-#else
- #include "WProgram.h"
-#endif
-
 #define swap(a, b) { int16_t t = a; a = b; b = t; }
 
 class Adafruit_GFX : public Print {
