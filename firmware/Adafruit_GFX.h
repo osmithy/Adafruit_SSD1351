@@ -57,11 +57,11 @@ class Adafruit_GFX : public Print {
     setRotation(uint8_t r),
     cp437(boolean x=true);
 
-#if ARDUINO >= 100
+//#if ARDUINO >= 100
   virtual size_t write(uint8_t);
-#else
-  virtual void   write(uint8_t);
-#endif
+//#else
+  //virtual void   write(uint8_t);
+//#endif
 
   int16_t height(void) const;
   int16_t width(void) const;
