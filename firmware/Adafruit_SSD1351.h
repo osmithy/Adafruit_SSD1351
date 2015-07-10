@@ -15,25 +15,16 @@
   Written by Limor Fried/Ladyada for Adafruit Industries.  
   BSD license, all text above must be included in any redistribution
  ****************************************************/
+#ifndef _ADAFRUIT_SSD1351_H
+#define _ADAFRUIT_SSD1351_H
 
+#include "application.h"
+ 
 #define SSD1351WIDTH 128
 #define SSD1351HEIGHT 128  // SET THIS TO 96 FOR 1.27"!
 
-#define swap(a, b) { uint16_t t = a; a = b; b = t; }
+//#define swap(a, b) { uint16_t t = a; a = b; b = t; }
 
-#if defined(ARDUINO) && ARDUINO >= 100
-#include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
-
-#ifdef __SAM3X8E__
-    typedef volatile RwReg PortReg;
-    typedef uint32_t PortMask;
-#else
-    typedef volatile uint8_t PortReg;
-    typedef uint8_t PortMask;
-#endif
 
 // Select one of these defines to set the pixel color order
 #define SSD1351_COLORORDER_RGB
@@ -65,20 +56,20 @@
 #define SSD1351_CMD_PRECHARGE 		0xB1
 #define SSD1351_CMD_DISPLAYENHANCE	0xB2
 #define SSD1351_CMD_CLOCKDIV 		0xB3
-#define SSD1351_CMD_SETVSL 		0xB4
+#define SSD1351_CMD_SETVSL 			0xB4
 #define SSD1351_CMD_SETGPIO 		0xB5
 #define SSD1351_CMD_PRECHARGE2 		0xB6
 #define SSD1351_CMD_SETGRAY 		0xB8
-#define SSD1351_CMD_USELUT 		0xB9
+#define SSD1351_CMD_USELUT 			0xB9
 #define SSD1351_CMD_PRECHARGELEVEL 	0xBB
-#define SSD1351_CMD_VCOMH 		0xBE
+#define SSD1351_CMD_VCOMH 			0xBE
 #define SSD1351_CMD_CONTRASTABC		0xC1
 #define SSD1351_CMD_CONTRASTMASTER	0xC7
-#define SSD1351_CMD_MUXRATIO            0xCA
-#define SSD1351_CMD_COMMANDLOCK         0xFD
-#define SSD1351_CMD_HORIZSCROLL         0x96
-#define SSD1351_CMD_STOPSCROLL          0x9E
-#define SSD1351_CMD_STARTSCROLL         0x9F
+#define SSD1351_CMD_MUXRATIO		0xCA
+#define SSD1351_CMD_COMMANDLOCK		0xFD
+#define SSD1351_CMD_HORIZSCROLL		0x96
+#define SSD1351_CMD_STOPSCROLL		0x9E
+#define SSD1351_CMD_STARTSCROLL		0x9F
 
 
 class Adafruit_SSD1351  : public virtual Adafruit_GFX {
@@ -115,11 +106,9 @@ class Adafruit_SSD1351  : public virtual Adafruit_GFX {
 
  private:
   void spiwrite(uint8_t);
-  void rawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t fillcolor);
-  void rawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color);
-  void rawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color);
 
   uint8_t _cs, _rs, _rst, _sid, _sclk;
-  PortReg *csport, *rsport, *sidport, *sclkport;
-  PortMask cspinmask, rspinmask, sidpinmask, sclkpinmask;
+ 
 };
+
+#endif

@@ -1,14 +1,13 @@
 /*************************************************** 
-  This is a example sketch demonstrating graphic drawing
-  capabilities of the SSD1351 library for the 1.5" 
-  and 1.27" 16-bit Color OLEDs with SSD1351 driver chip
+  This is a example sketch demonstrating bitmap drawing
+  for the 1.5" & 1.27" 16-bit Color OLEDs with SSD1331 driver chip
 
   Pick one up today in the adafruit shop!
   ------> http://www.adafruit.com/products/1431
   ------> http://www.adafruit.com/products/1673
- 
+
   If you're using a 1.27" OLED, change SSD1351HEIGHT in Adafruit_SSD1351.h
- 	to 96 instead of 128
+	to 96 instead of 128
 
   These displays use SPI to communicate, 4 or 5 pins are required to  
   interface
@@ -25,11 +24,11 @@
  ****************************************************/
 
 // You can use any (4 or) 5 pins 
-#define sclk 2
-#define mosi 3
-#define dc   4
-#define cs   5
-#define rst  6
+#define sclk A3		//2
+#define mosi A5		//3
+#define dc   D3		//4
+#define cs   A2		//5
+#define rst  D2		//6
 
 // Color definitions
 #define	BLACK           0x0000
@@ -41,9 +40,8 @@
 #define YELLOW          0xFFE0  
 #define WHITE           0xFFFF
 
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1351.h>
-#include <SPI.h>
+#include "Adafruit_mfGFX.h"
+#include "Adafruit_SSD1351.h"
 
 // Option 1: use any pins but a little slower
 //Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, mosi, sclk, rst);  
@@ -66,19 +64,11 @@ void fillpixelbypixel(uint16_t color) {
 }
 
 void setup(void) {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.print("hello!");
   tft.begin();
 
   Serial.println("init");
-
-  // You can optionally rotate the display by running the line below.
-  // Note that a value of 0 means no rotation, 1 means 90 clockwise,
-  // 2 means 180 degrees clockwise, and 3 means 270 degrees clockwise.
-  //tft.setRotation(1);
-  // NOTE: The test pattern at the start will NOT be rotated!  The code
-  // for rendering the test pattern talks directly to the display and
-  // ignores any rotation.
 
   uint16_t time = millis();
   tft.fillRect(0, 0, 128, 128, BLACK);

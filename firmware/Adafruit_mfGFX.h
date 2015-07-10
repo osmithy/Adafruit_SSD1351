@@ -2,6 +2,8 @@
 #define _ADAFRUIT_GFX_H
 
 #include "application.h"
+#include "fonts.h"
+
 
 #define swap(a, b) { int16_t t = a; a = b; b = t; }
 
@@ -23,7 +25,8 @@ class Adafruit_GFX : public Print {
     drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color),
     fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color),
     fillScreen(uint16_t color),
-    invertDisplay(boolean i);
+    invertDisplay(boolean i),
+    drawFastChar(int16_t x, int16_t y, unsigned char c, uint16_t color, uint16_t bg, uint8_t size);
 
   // These exist only with Adafruit_GFX (no subclass overrides)
   void
@@ -43,10 +46,6 @@ class Adafruit_GFX : public Print {
       int16_t radius, uint16_t color),
     drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
       int16_t w, int16_t h, uint16_t color),
-    drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
-      int16_t w, int16_t h, uint16_t color, uint16_t bg),
-    drawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap, 
-      int16_t w, int16_t h, uint16_t color),
     drawChar(int16_t x, int16_t y, unsigned char c, uint16_t color,
       uint16_t bg, uint8_t size),
     setCursor(int16_t x, int16_t y),
@@ -55,22 +54,16 @@ class Adafruit_GFX : public Print {
     setTextSize(uint8_t s),
     setTextWrap(boolean w),
     setRotation(uint8_t r),
-    cp437(boolean x=true);
+    setFont(uint8_t f);
 
-//#if ARDUINO >= 100
   virtual size_t write(uint8_t);
-//#else
-  //virtual void   write(uint8_t);
-//#endif
 
-  int16_t height(void) const;
-  int16_t width(void) const;
 
-  uint8_t getRotation(void) const;
+  int16_t
+    height(void),
+    width(void);
 
-  // get current cursor position (get rotation safe maximum values, using: width() for x, height() for y)
-  int16_t getCursorX(void) const;
-  int16_t getCursorY(void) const;
+  uint8_t getRotation(void);
 
  protected:
   const int16_t
@@ -82,37 +75,16 @@ class Adafruit_GFX : public Print {
     textcolor, textbgcolor;
   uint8_t
     textsize,
-    rotation;
+    rotation,
+    font,
+    fontStart,
+    fontEnd;
+  int8_t
+    fontKern;
+  const uint8_t* fontData;
+  const FontDescriptor* fontDesc;
   boolean
-    wrap,   // If set, 'wrap' text at right edge of display
-    _cp437; // If set, use correct CP437 charset (default is off)
-};
-
-class Adafruit_GFX_Button {
-
- public:
-  Adafruit_GFX_Button(void);
-  void initButton(Adafruit_GFX *gfx, int16_t x, int16_t y, 
-		      uint8_t w, uint8_t h, 
-		      uint16_t outline, uint16_t fill, uint16_t textcolor,
-		      char *label, uint8_t textsize);
-  void drawButton(boolean inverted = false);
-  boolean contains(int16_t x, int16_t y);
-
-  void press(boolean p);
-  boolean isPressed();
-  boolean justPressed();
-  boolean justReleased();
-
- private:
-  Adafruit_GFX *_gfx;
-  int16_t _x, _y;
-  uint16_t _w, _h;
-  uint8_t _textsize;
-  uint16_t _outlinecolor, _fillcolor, _textcolor;
-  char _label[10];
-
-  boolean currstate, laststate;
+    wrap; // If set, 'wrap' text at right edge of display
 };
 
 #endif // _ADAFRUIT_GFX_H
