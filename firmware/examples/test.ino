@@ -1,4 +1,4 @@
-/*************************************************** 
+/***************************************************
   This is a example sketch demonstrating bitmap drawing
   for the 1.5" & 1.27" 16-bit Color OLEDs with SSD1331 driver chip
 
@@ -9,13 +9,13 @@
   If you're using a 1.27" OLED, change SSD1351HEIGHT in Adafruit_SSD1351.h
 	to 96 instead of 128
 
-  These displays use SPI to communicate, 4 or 5 pins are required to  
+  These displays use SPI to communicate, 4 or 5 pins are required to
   interface
-  Adafruit invests time and resources providing this open source code, 
-  please support Adafruit and open-source hardware by purchasing 
+  Adafruit invests time and resources providing this open source code,
+  please support Adafruit and open-source hardware by purchasing
   products from Adafruit!
 
-  Written by Limor Fried/Ladyada for Adafruit Industries.  
+  Written by Limor Fried/Ladyada for Adafruit Industries.
   BSD license, all text above must be included in any redistribution
 
   The Adafruit GFX Graphics core library is also required
@@ -23,7 +23,7 @@
   Be sure to install it!
  ****************************************************/
 
-// You can use any (4 or) 5 pins 
+// You can use any (4 or) 5 pins
 #define sclk A3		//2
 #define mosi A5		//3
 #define dc   D3		//4
@@ -37,17 +37,17 @@
 #define	GREEN           0x07E0
 #define CYAN            0x07FF
 #define MAGENTA         0xF81F
-#define YELLOW          0xFFE0  
+#define YELLOW          0xFFE0
 #define WHITE           0xFFFF
 
-#include "Adafruit_mfGFX.h"
-#include "Adafruit_SSD1351.h"
+#include "Adafruit_SSD1351/Adafruit_mfGFX.h"
+#include "Adafruit_SSD1351/Adafruit_SSD1351.h"
 
 // Option 1: use any pins but a little slower
-//Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, mosi, sclk, rst);  
+//Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, mosi, sclk, rst);
 
-// Option 2: must use the hardware SPI pins 
-// (for UNO thats sclk = 13 and sid = 11) and pin 10 must be 
+// Option 2: must use the hardware SPI pins
+// (for UNO thats sclk = 13 and sid = 11) and pin 10 must be
 // an output. This is much faster - also required if you want
 // to use the microSD card (see the image drawing example)
 Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, rst);
@@ -73,13 +73,13 @@ void setup(void) {
   uint16_t time = millis();
   tft.fillRect(0, 0, 128, 128, BLACK);
   time = millis() - time;
-  
+
   Serial.println(time, DEC);
   delay(500);
-  
+
   lcdTestPattern();
   delay(500);
-  
+
   tft.invert(true);
   delay(100);
   tft.invert(false);
@@ -92,18 +92,18 @@ void setup(void) {
   // tft print function!
   tftPrintTest();
   delay(500);
-  
+
   //a single pixel
   tft.drawPixel(tft.width()/2, tft.height()/2, GREEN);
   delay(500);
 
   // line draw test
   testlines(YELLOW);
-  delay(500);    
- 
+  delay(500);
+
   // optimized lines
   testfastlines(RED, BLUE);
-  delay(500);    
+  delay(500);
 
 
   testdrawrects(GREEN);
@@ -116,13 +116,13 @@ void setup(void) {
   testfillcircles(10, BLUE);
   testdrawcircles(10, WHITE);
   delay(1000);
-   
+
   testroundrects();
   delay(500);
-  
+
   testtriangles();
   delay(500);
-  
+
   Serial.println("done");
   delay(1000);
 }
@@ -138,7 +138,7 @@ void testlines(uint16_t color) {
    for (uint16_t y=0; y < tft.height()-1; y+=6) {
      tft.drawLine(0, 0, tft.width()-1, y, color);
    }
-   
+
    tft.fillScreen(BLACK);
    for (uint16_t x=0; x < tft.width()-1; x+=6) {
      tft.drawLine(tft.width()-1, 0, x, tft.height()-1, color);
@@ -146,7 +146,7 @@ void testlines(uint16_t color) {
    for (uint16_t y=0; y < tft.height()-1; y+=6) {
      tft.drawLine(tft.width()-1, 0, 0, y, color);
    }
-   
+
    tft.fillScreen(BLACK);
    for (uint16_t x=0; x < tft.width()-1; x+=6) {
      tft.drawLine(0, tft.height()-1, x, 0, color);
@@ -162,7 +162,7 @@ void testlines(uint16_t color) {
    for (uint16_t y=0; y < tft.height()-1; y+=6) {
      tft.drawLine(tft.width()-1, tft.height()-1, 0, y, color);
    }
-   
+
 }
 
 void testdrawtext(char *text, uint16_t color) {
@@ -201,7 +201,7 @@ void testfillcircles(uint8_t radius, uint16_t color) {
     for (uint8_t y=radius; y < tft.height()-1; y+=radius*2) {
       tft.fillCircle(x, y, radius, color);
     }
-  }  
+  }
 }
 
 void testdrawcircles(uint8_t radius, uint16_t color) {
@@ -209,7 +209,7 @@ void testdrawcircles(uint8_t radius, uint16_t color) {
     for (uint8_t y=0; y < tft.height()-1+radius; y+=radius*2) {
       tft.drawCircle(x, y, radius, color);
     }
-  }  
+  }
 }
 
 void testtriangles() {
@@ -232,7 +232,7 @@ void testtriangles() {
 void testroundrects() {
   tft.fillScreen(BLACK);
   int color = 100;
-  
+
   int x = 0;
   int y = 0;
   int w = tft.width();
@@ -251,7 +251,7 @@ void testroundrects() {
 void tftPrintTest() {
   tft.fillScreen(BLACK);
   tft.setCursor(0, 5);
-  tft.setTextColor(RED);  
+  tft.setTextColor(RED);
   tft.setTextSize(1);
   tft.println("Hello World!");
   tft.setTextColor(YELLOW);
@@ -305,7 +305,7 @@ void mediabuttons() {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Renders a simple test pattern on the LCD
 */
 /**************************************************************************/
@@ -313,7 +313,7 @@ void lcdTestPattern(void)
 {
   uint32_t i,j;
   tft.goTo(0, 0);
-  
+
   for(i=0;i<128;i++)
   {
     for(j=0;j<128;j++)
@@ -330,7 +330,7 @@ void lcdTestPattern(void)
       else if(i<96){tft.writeData(MAGENTA>>8);tft.writeData(MAGENTA);}
       else if(i<112){tft.writeData(BLACK>>8);tft.writeData(BLACK);}
       else {
-        tft.writeData(WHITE>>8);      
+        tft.writeData(WHITE>>8);
         tft.writeData(WHITE);
        }
     }
